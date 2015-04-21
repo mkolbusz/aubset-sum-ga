@@ -2,22 +2,22 @@
  * Created by kolbusz on 18.04.15.
  */
 public class Gene {
-    private Integer activity;
+    private Boolean activity;
 
-    public Gene(Integer activity) {
+    public Gene(Boolean activity) {
         this.setActivity(activity);
     }
 
-    public Integer getActivity() {
+    public Boolean isActive() {
         return activity;
     }
 
-    public void setActivity(Integer activity) {
-        this.activity = activity > 0 ? 1 : 0;
+    public void setActivity(Boolean activity) {
+        this.activity = activity;
     }
 
     public void changeActivity(){
-        this.setActivity(this.getActivity() == 1 ? 0 : 1);
+        this.setActivity(!this.isActive());
     }
 
     @Override

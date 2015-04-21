@@ -10,7 +10,7 @@ public class Individual{
         this.chromosome = new Chromosome(length);
         Random random = new Random();
         for(int i=0; i < length; i++){
-            this.getChromosome().getGenes().add(new Gene((random.nextInt(100) < 50 ? 0 : 1)));
+            this.getChromosome().getGenes().add(new Gene((random.nextInt(100) < 30 ? true : false)));
         }
     }
 
@@ -21,15 +21,16 @@ public class Individual{
     }
 
     public Double fitness(){
-        return calculateDistance(Main.SUM, Main.SET);
+        return calculateDistance(Config.TARGET_SUM, Main.SET);
     }
+
 
     public Double calculateDistance(Integer target, Set<Integer> set){
         Double position = 0.0;
         Iterator<Integer> it = set.iterator();
         for(int i=0; i < set.size(); i++){
             Integer n = it.next();
-            if(this.getChromosome().getGenes().get(i).getActivity() == 1){
+            if(this.getChromosome().getGenes().get(i).isActive()){
                 position += n;
             }
 
@@ -42,7 +43,7 @@ public class Individual{
         for(Gene gene : this.getChromosome().getGenes()){
             result += gene + ", ";
         }
-        result += "] = " + String.valueOf(this.fitness());
+        result += "] = " + String.valueOf(this.fitness()) + "\n";
         return result;
     }
 
@@ -54,7 +55,7 @@ public class Individual{
         if(!(obj instanceof Individual)) return false;
         Individual o = (Individual)obj;
         for(int i=0; i < this.getChromosome().getGenes().size(); i++){
-            if(this.getChromosome().getGenes().get(i) != o.getChromosome().getGenes().get(i)){
+            if(this.getChromosome().getGene(i) != o.getChromosome().getGene(i)){
                 return false;
             }
         }

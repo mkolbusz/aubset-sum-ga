@@ -18,7 +18,17 @@ public class Chromosome {
         this.genes = genes;
     }
 
-    public void setGene(int index, Integer activity){
+    public void setGene(int index, Boolean activity){
         this.getGenes().get(index).setActivity(activity);
+    }
+    public Gene getGene(int index){
+        if(index >= 0 && index < this.getGenes().size()){
+            return this.getGenes().get(index);
+        }
+        throw new IndexOutOfBoundsException("Out of genes array");
+    }
+
+    public Integer length(){
+        return this.genes.size();
     }
 }
