@@ -1,3 +1,5 @@
+import java.beans.ExceptionListener;
+import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -7,6 +9,7 @@ public class SubsetSumGA {
 
     public Population initPopulation(Integer length, Integer size){
         System.out.println("INIT POPULATION");
+
         Population population = new Population();
         for(int i=0; i < size; i++){
             population.getIndividuals().add(new Individual(length));
@@ -15,16 +18,22 @@ public class SubsetSumGA {
         return population;
     }
 
-    public Population selection(Population population, Integer target){
+    public boolean selection(Population population, Integer target){
         System.out.println("SELECTION");
+        population.printIndividuals();;
         for(Iterator<Individual> it = population.getIndividuals().iterator(); it.hasNext();){
             Individual ind = it.next();
+            if(ind.fitness().intValue() == 0){
+
+                return true;
+            }
             if(ind.fitness() > target*0.5){
                 it.remove();
             }
         }
         System.out.println("SELECTION - END");
-        return population;
+        population.printIndividuals();
+        return false;
     }
 
     public Population crossover(Population population){
@@ -79,43 +88,41 @@ public class SubsetSumGA {
         System.out.println("MUTATION - END");
     }
 
-    public void reproduction(Population population, Integer size){
-        System.out.println("BEFORE REPRODUCTION: " + population.getIndividuals().size());
-        Double sum = 0.0;
-        Double max = population.getIndividuals().iterator().next().fitness();
-        for(Individual ind : population.getIndividuals()){
-            sum += ind.fitness();
-            if(max < ind.fitness()){
-                max = ind.fitness();
-            }
+    public void reproduction(Population population, Integer size) throws Exception {
+        if(population.getIndividuals().size() == 0){
+            throw new Exception();
         }
+        System.out.println("BEFORE REPRODUCTION: " + population.getIndividuals().size());
 
-        HashMap<Double, Integer> counter = new HashMap<Double, Integer>();
-        HashMap<Double, ArrayList<Individual>> container = new HashMap<Double, ArrayList<Individual>>();
+        TreeMap<Double, ArrayList<Individual>> groupedInd = new TreeMap<Double, ArrayList<Individual>>();
+
         for(Individual ind : population.getIndividuals()){
-            Double p = (max-ind.fitness())/sum;
-            if(counter.containsKey(p)){
-                counter.replace(p, counter.get(p)+1);
-            }else {
-                counter.put(p, 1);
-                container.put(p, new ArrayList<Individual>());
-
+            Double f = ind.fitness();
+            if(groupedInd.get(f) == null){
+                groupedInd.put(f, new ArrayList<Individual>());
             }
-            container.get(p).add(ind);
+            ArrayList<Individual> tmp = groupedInd.get(f);
+            tmp.add(ind);
         }
 
         Integer emptySpace = size - population.getIndividuals().size();
 
+        Double sum = 0.0;
+        for(Double key : groupedInd.keySet()){
+            sum += key;
+        }
+
         Random random = new Random();
-        for(Double p : counter.keySet()){
-            Double percent = p*counter.get(p);
-            Double space = percent*emptySpace;
-            ArrayList<Individual> candidates = container.get(p);
-            for(int i=0; i < space; i++){
-                Integer index = random.nextInt(candidates.size());
-                population.getIndividuals().add(candidates.get(index));
+        for(Double key : groupedInd.keySet()){
+            Double percent = (0.5*Main.SUM - key)/sum;
+            Integer space = (int)Math.round(percent*emptySpace);
+            while(space-- != 0){
+                ArrayList<Individual> inds = groupedInd.get(key);
+                population.getIndividuals().add(inds.get(random.nextInt(inds.size())));
             }
         }
+
+
         System.out.println("AFTER REPRODUCTION: " + population.getIndividuals().size());
 
     }

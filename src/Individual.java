@@ -15,6 +15,7 @@ public class Individual{
     }
 
 
+
     public Chromosome getChromosome() {
         return chromosome;
     }

@@ -1,12 +1,11 @@
-import com.sun.org.apache.bcel.internal.generic.POP;
 
 import java.util.*;
 
 public class Main {
     public static Integer POPULATION_SIZE = 10000;
-    public static Integer SUM = 45;
-    public static Integer ITER_SIZE = 100;
-    public static Double  MUTATION_PROPABILITY = 0.01;
+    public static Integer SUM = 40;
+    public static Integer ITER_SIZE = 1;
+    public static Double  MUTATION_PROPABILITY = 0.001;
     public static SortedSet<Integer> SET;
 
     public static void main(String[] args) {
@@ -16,21 +15,42 @@ public class Main {
             return;
         }
 
+        System.out.println(set);
         // GENETIC ALGORITHM
         SubsetSumGA ga = new SubsetSumGA();
         Population population = ga.initPopulation(set.size(), POPULATION_SIZE);
+        if(ga.selection(population, SUM) != true){
+            while(ITER_SIZE-- != 0){
+                try {
+                    ga.reproduction(population, POPULATION_SIZE);
+                }catch (Exception e){
+                   e.printStackTrace();
+                    return;
+                }
+                population = ga.crossover(population);
+                ga.mutation(population);
 
-
-
-        while(population.getIndividuals().size() <= POPULATION_SIZE*0.1 || ITER_SIZE-- != 0){
-            ga.selection(population, SUM);
-            ga.reproduction(population, POPULATION_SIZE);
-            population = ga.crossover(population);
-            ga.mutation(population);
+                if(ga.selection(population, SUM) == true){
+                    break;
+                }
+            }
         }
-        for(Individual ind : population.getIndividuals()){
-            System.out.println(ind);
-        }
+
+
+        population.getIndividuals().sort(new Comparator<Individual>() {
+            @Override
+            public int compare(Individual o1, Individual o2) {
+                if(o1.fitness() < o2.fitness()){
+                    return -1;
+                }
+                if(o1.fitness() > o2.fitness()){
+                    return 1;
+                }
+                return 0;
+            }
+        });
+
+        System.out.println(population.getIndividuals().get(0));
         System.out.println(set);
     }
 

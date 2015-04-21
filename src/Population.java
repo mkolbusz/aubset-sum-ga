@@ -8,6 +8,7 @@ import java.util.TreeSet;
  */
 public class Population {
     ArrayList<Individual> individuals;
+    Double fittedPercent = 0.0;
 
     public Population() {
         this.individuals = new ArrayList<Individual>();
@@ -17,5 +18,11 @@ public class Population {
         return individuals;
     }
 
+
+    public void printIndividuals(){
+        for(Individual ind : this.getIndividuals()){
+            System.out.println(ind);
+        }
+    }
 
 }
