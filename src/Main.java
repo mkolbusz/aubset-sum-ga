@@ -1,8 +1,3 @@
-
-import exceptions.EmptyPopulationException;
-import org.jfree.ui.RefineryUtilities;
-
-import java.io.*;
 import java.util.*;
 
 public class Main {

@@ -71,7 +71,7 @@ public class GUIAdapter {
         });
         
         this.gui.getGenerateChartBtn().addActionListener((ActionEvent e) -> {
-            ChartSolution chart = new ChartSolution("Wykres", "x", ga.iterationsSum);
+            ChartSolution chart = new ChartSolution("Wykres", "Wyniki algorytmu w poszczególnych iteracjach", ga.iterationsSum);
             chart.setSize(800, 600);
             chart.setVisible(true);
         });
