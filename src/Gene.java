@@ -22,6 +22,6 @@ public class Gene {
 
     @Override
     public String toString() {
-        return String.valueOf(activity);
+        return activity ? "1" : "0";
     }
 }

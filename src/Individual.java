@@ -5,13 +5,16 @@ import java.util.*;
  */
 public class Individual{
     Chromosome chromosome;
+    private Integer fitness = null;
+    private Integer value = null;
 
     public Individual(Integer length) {
         this.chromosome = new Chromosome(length);
         Random random = new Random();
         for(int i=0; i < length; i++){
-            this.getChromosome().getGenes().add(new Gene((random.nextInt(100) < 30 ? true : false)));
+            this.getChromosome().getGenes().add(new Gene((random.nextInt(1000) < 30 ? true : false)));
         }
+        setFitness(calculateDistance(Config.TARGET_SUM, Main.SET));
     }
 
 
@@ -20,22 +23,20 @@ public class Individual{
         return chromosome;
     }
 
-    public Double fitness(){
-        return calculateDistance(Config.TARGET_SUM, Main.SET);
-    }
 
-
-    public Double calculateDistance(Integer target, Set<Integer> set){
-        Double position = 0.0;
+    public Integer calculateDistance(Integer target, Collection<Integer> set){
+        Integer value = 0;
         Iterator<Integer> it = set.iterator();
         for(int i=0; i < set.size(); i++){
             Integer n = it.next();
             if(this.getChromosome().getGenes().get(i).isActive()){
-                position += n;
+                value += n;
             }
 
         }
-        return Math.abs(target - position);
+        this.setFitness((Integer) Math.abs(target - value));
+        this.setValue(value);
+        return this.getFitness();
     }
     @Override
     public String toString() {
@@ -43,22 +44,47 @@ public class Individual{
         for(Gene gene : this.getChromosome().getGenes()){
             result += gene + ", ";
         }
-        result += "] = " + String.valueOf(this.fitness()) + "\n";
+        result += "] = " + this.getFitness() + "(" + this.getValue() + ")\n";
         return result;
     }
 
-
-    @Override
-    public boolean equals(Object obj) {
-        if(obj == null) return false;
-        if(obj == this) return true;
-        if(!(obj instanceof Individual)) return false;
-        Individual o = (Individual)obj;
-        for(int i=0; i < this.getChromosome().getGenes().size(); i++){
-            if(this.getChromosome().getGene(i) != o.getChromosome().getGene(i)){
-                return false;
-            }
+    /**
+     * @return the distance
+     */
+    public Integer getFitness() {
+        if(this.fitness == null){
+            throw new NullPointerException();
         }
-        return true;
+        return fitness;
     }
+
+    /**
+     * @param fitness the distance to set
+     */
+    public void setFitness(Integer fitness) {
+        this.fitness = fitness;
+    }
+    
+    public void calculateFitness(){
+        this.setFitness(calculateDistance(Config.TARGET_SUM, Main.SET));
+    }
+    
+
+    /**
+     * @return the value
+     */
+    public Integer getValue() {
+        if(this.value == null){
+            throw new NullPointerException();
+        }
+        return value;
+    }
+
+    /**
+     * @param value the value to set
+     */
+    public void setValue(Integer value) {
+        this.value = value;
+    }
+
 }
