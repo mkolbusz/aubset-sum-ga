@@ -5,6 +5,7 @@ import java.util.Comparator;
  * Created by kolbusz on 18.04.15.
  */
 public class Population {
+    boolean isSorted = false;
     private Integer size;
     ArrayList<Individual> individuals = new ArrayList<Individual>();
 
@@ -43,12 +44,18 @@ public class Population {
         this.size = size;
     }
     
+    public Double getAverageFitness(){
+        Double sum = 0.0;
+        for(Individual ind : individuals){
+            sum += ind.getFitness();
+        }
+        return (sum/individuals.size());
+    }
+    
     public Population sort(){
         this.getIndividuals().sort(new Comparator<Individual>() {
             @Override
             public int compare(Individual o1, Individual o2) {
-                o1.calculateFitness();
-                o2.calculateFitness();
                 if(o1.getFitness() < o2.getFitness()){
                     return -1;
                 }
@@ -60,4 +67,5 @@ public class Population {
         });
        return this;
     }
+    
 }

@@ -1,3 +1,4 @@
+import config.InstanceConfig;
 import java.io.File;
 
 import java.util.*;
@@ -8,51 +9,53 @@ import java.util.stream.Collectors;
 /**
  * Klasa algorytmu genetycznego
  */
-public class SubsetSumGA implements Runnable, GeneticAlgorithm {
-    public ArrayList<Integer> iterationsSum;
+public class SubsetSumGA implements GeneticAlgorithm {
+    public Collection<Integer> set = null;
+    public ChartSolution chart = null;
+    public ArrayList<Integer> result;
+    public InstanceConfig config = null;
     
-    public SubsetSumGA(Reader reader, File file) {
-        Main.SET = reader.read(file);
+    
+    public SubsetSumGA(Reader reader, File file, InstanceConfig config) {
+        this.set = reader.read(file);
+        this.config = config;
+    }
+    
+    public Collection<Integer> getNumberSet(){
+        return this.set;
     }
     
     
-    
-    @Override
     public void run() {
-        if(Main.SET == null){
+        if(this.set == null){
             return;
         }
         
-        iterationsSum = new ArrayList<>();
+        chart.bestFitness = new ArrayList<>();
+        chart.worstFitness = new ArrayList<>();
+        chart.avFitness = new ArrayList<>();
 
         // GENETIC ALGORITHM
-        Population population = this.initPopulation(Main.SET.size(), Config.POPULATION_SIZE);
+        Population population = this.initPopulation(this.getNumberSet().size(), this.config.POPULATION_SIZE);
+        this.fitness(population);
         population.sort();
-        Integer first = population.getIndividuals().get(0).getFitness();
-        Integer last = population.getIndividuals().get(population.getIndividuals().size()-1).getFitness();
-        this.iterationsSum.add(first);
-        Integer iterations = Config.ITER_SIZE;
-        while(iterations-- != 0 && !isSolved(population)){
-            
-            this.selection(population);            
+        chart.bestFitness.add(population.getIndividuals().get(0).getFitness());
+        chart.worstFitness.add(population.getIndividuals().get(population.getIndividuals().size()-1).getFitness());
+        this.config.iterations = new Integer(this.config.ITER_SIZE);
+        while(this.config.iterations-- != 0 && !isSolved(population)){
+            this.selection(population);         
             this.reproduction(population);
             population = this.crossover(population);
             this.mutation(population);
+            this.fitness(population);
             population.sort();
-            first = population.getIndividuals().get(0).getFitness();
-            last = population.getIndividuals().get(population.getIndividuals().size()-1).getFitness();
-            this.iterationsSum.add(first);
-            
+            chart.bestFitness.add(population.getIndividuals().get(0).getFitness());
+            chart.worstFitness.add(population.getIndividuals().get(population.getIndividuals().size()-1).getFitness());
+            chart.avFitness.add(population.getAverageFitness());
         }
-        
-       
-        
-        System.out.println(iterations +" - ITERATIONS: " + this.iterationsSum);
+        this.config.iterations = this.config.ITER_SIZE - this.config.iterations - 1;
         population.sort();
-
-        ArrayList<Integer> result = Main.transformResult(population.getIndividuals().get(0));
-        System.out.println(Main.SET);
-        System.out.println("ROZWIAZANIE: " + result + "\nOsobnik: " + population.getIndividuals().get(0));
+        this.result = transformResult(population.getIndividuals().get(0));
     }
     
     private boolean isSolved(Population population){
@@ -98,8 +101,8 @@ public class SubsetSumGA implements Runnable, GeneticAlgorithm {
                 childs[0].getChromosome().setGene(k, parents[1].getChromosome().getGene(k).isActive());
                 childs[1].getChromosome().setGene(k, parents[0].getChromosome().getGene(k).isActive());
             }
-            childs[0].calculateFitness();
-            childs[1].calculateFitness();
+            this.individualFitness(childs[0]);
+            this.individualFitness(childs[1]);
             
             /**
              * Sprawdzenie czy nowo powstałe osobniki po krzyżowaniu są lepsze od rodziców
@@ -123,7 +126,7 @@ public class SubsetSumGA implements Runnable, GeneticAlgorithm {
         List<Individual> inds = population.getIndividuals().stream().filter(new Predicate<Individual>(){
             @Override
             public boolean test(Individual ind) {
-                return ind.getFitness() <= Config.INDIVIDUAL_TOLERANCE*Config.TARGET_SUM;
+                return ind.getFitness() <= config.INDIVIDUAL_TOLERANCE*config.TARGET_SUM;
             }
             
         }).collect(Collectors.toList());
@@ -136,7 +139,7 @@ public class SubsetSumGA implements Runnable, GeneticAlgorithm {
     public Population reproduction(Population population) {
         if(population.getIndividuals().isEmpty()){
             System.err.println("Empty population after selection");
-         //throw new EmptyPopulationException();
+
             return population;
         }
 
@@ -166,13 +169,15 @@ public class SubsetSumGA implements Runnable, GeneticAlgorithm {
 
         return population;
     }
-
+    
+    
+    
     @Override
     public Population mutation(Population population) {
         Random random = new Random();
         Integer i = 0;
         for (Individual ind : population.getIndividuals()) {
-            if(i < Config.MUTATION_NUMBER && random.nextFloat() <= Config.MUTATION_PROPABILITY){
+            if(i < this.config.MUTATION_NUMBER && random.nextFloat() <= this.config.MUTATION_PROPABILITY){
                 Integer index = random.nextInt(population.getIndividuals().iterator().next().getChromosome().length() * 10) / 10;
                 ind.getChromosome().getGene(index).changeActivity();
                 i++;
@@ -180,5 +185,40 @@ public class SubsetSumGA implements Runnable, GeneticAlgorithm {
         }
         return population;
     }
+    
+    
+    public ArrayList<Integer> transformResult(Individual ind){
+        ArrayList<Integer> result = new ArrayList<Integer>();
+        Iterator<Integer> it = this.getNumberSet().iterator();
+        Integer i = 0;
+        while(it.hasNext()){
+            Integer number = it.next();
+            if(ind.getChromosome().getGene(i).isActive()){
+                result.add(number);
+            }
+            i++;
+        }
+        return result;
+    }
 
+    @Override
+    public void fitness(Population population) {
+        for(Individual ind : population.getIndividuals()){
+            this.individualFitness(ind);
+        }
+    }
+    
+    public Integer individualFitness(Individual ind){
+        Integer value = 0;
+        Iterator<Integer> it = this.set.iterator();
+        for(int i=0; i < this.set.size(); i++){
+            Integer n = it.next();
+            if(ind.getChromosome().getGenes().get(i).isActive()){
+                value += n;
+            }
+        }
+        ind.setFitness((Integer) Math.abs(this.config.TARGET_SUM - value));
+        ind.setValue(value);
+        return ind.getFitness();
+    }
 }

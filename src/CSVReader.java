@@ -18,13 +18,12 @@ import java.util.TreeSet;
  * @author kolbusz
  */
 public class CSVReader implements Reader{
-    String delimiter = ",";
+    String delimiter = null;
+    Integer max = null;
 
-    public CSVReader() {}
-
-    
-    public CSVReader(String delimiter) {
+    public CSVReader(String delimiter, Integer max) {
         this.delimiter = delimiter;
+        this.max = max;
     }
     
     
@@ -39,7 +38,7 @@ public class CSVReader implements Reader{
                 String[] elements = line.split(this.delimiter);
                 for(String element : elements){
                     Integer number = Integer.valueOf(element);
-                    if(number <= Config.TARGET_SUM){
+                    if(number <= this.max){
                         result.add(Integer.valueOf(element));
                     }
                 }

@@ -18,4 +18,5 @@ public interface GeneticAlgorithm {
     Population reproduction(Population population);
     Population crossover(Population population);
     Population mutation(Population population);
+    void fitness(Population population);
 }
