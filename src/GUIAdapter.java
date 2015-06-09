@@ -87,7 +87,7 @@ public class GUIAdapter {
             JFileChooser fileChooser = new JFileChooser(".");
             fileChooser.showOpenDialog(gui);
             this.file = fileChooser.getSelectedFile();
-            if(!this.file.exists()){
+            if(this.file != null && !this.file.exists()){
                 this.file = null;
                 JOptionPane.showMessageDialog(gui, "Wybrany plik nie istnieje", "Błędny plik", JOptionPane.ERROR_MESSAGE);
             }

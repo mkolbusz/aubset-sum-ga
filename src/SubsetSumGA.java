@@ -10,22 +10,49 @@ import java.util.stream.Collectors;
  * Klasa algorytmu genetycznego
  */
 public class SubsetSumGA implements GeneticAlgorithm {
+    /**
+     * Zbiór liczb, z którego wybieramy rozwiązanie
+     */
     public Collection<Integer> set = null;
+    
+    /**
+     * Wykres wyników
+     */
     public ChartSolution chart = null;
+    
+    /**
+     * Wynikowy zbiór liczb (rozwiązanie)
+     */
     public ArrayList<Integer> result;
+    
+    /**
+     * Konfiguracja algorytmu
+     */
     public InstanceConfig config = null;
     
     
+    /**
+     * 
+     * @param reader Obiekt odczytujący dane z pliku
+     * @param file Nazwa pliku, z którego dane mają zostać wczytane
+     * @param config Obiekt przechowujący konfigurację algorytmu
+     */
     public SubsetSumGA(Reader reader, File file, InstanceConfig config) {
         this.set = reader.read(file);
         this.config = config;
     }
     
+    /**
+     * Zwraca wejściowy zbiór liczb, na którym pracuje algorytm
+     * @return Zbiór liczb
+     */
     public Collection<Integer> getNumberSet(){
         return this.set;
     }
     
-    
+    /**
+     * 
+     */
     public void run() {
         if(this.set == null){
             return;

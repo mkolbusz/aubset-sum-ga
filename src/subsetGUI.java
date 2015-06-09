@@ -1,3 +1,31 @@
+
+import java.awt.Canvas;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.Graphics;
+import java.awt.GraphicsEnvironment;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.plaf.basic.BasicArrowButton;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -15,6 +43,7 @@ public class subsetGUI extends javax.swing.JFrame {
      */
     public subsetGUI() {
         initComponents();
+        drawButtons();
     }
 
     /**
@@ -48,14 +77,19 @@ public class subsetGUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Problem sumy podzbiory - Alogrytm Genetyczny");
+        setBackground(new java.awt.Color(126, 164, 17));
+        setForeground(java.awt.Color.white);
         setMaximumSize(new java.awt.Dimension(328, 508));
         setMinimumSize(new java.awt.Dimension(328, 508));
 
         populationSize.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(100), Integer.valueOf(1), null, Integer.valueOf(1)));
+        populationSize.setBorder(null);
 
+        targetSum.setFont(new java.awt.Font("Cantarell", 1, 15)); // NOI18N
         targetSum.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(1), Integer.valueOf(1), null, Integer.valueOf(1)));
+        targetSum.setBorder(null);
 
-        jLabel2.setText("Rozmiar populacji");
+        jLabel2.setText("ROZMIAR POPULACJI");
 
         jLabel4.setText("Suma docelowa");
 
@@ -71,9 +105,15 @@ public class subsetGUI extends javax.swing.JFrame {
 
         mutationNumberInStep.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(5), Integer.valueOf(0), null, Integer.valueOf(1)));
 
+        startButton.setBackground(new java.awt.Color(76, 59, 77));
+        startButton.setForeground(new java.awt.Color(201, 237, 220));
         startButton.setText("Start - uruchom algorytm");
 
+        importDataCSVBtn.setBackground(new java.awt.Color(76, 59, 77));
+        importDataCSVBtn.setForeground(new java.awt.Color(201, 237, 220));
         importDataCSVBtn.setText("Importuj dane z pliku CSV");
+        importDataCSVBtn.setBorderPainted(false);
+        importDataCSVBtn.setFocusPainted(false);
 
         jLabel8.setText("<html>Maksymalna ilość iteracji</html>");
 
@@ -87,6 +127,8 @@ public class subsetGUI extends javax.swing.JFrame {
 
         maxNumberSetValue.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(1)));
 
+        exitBtn.setBackground(new java.awt.Color(76, 59, 77));
+        exitBtn.setForeground(new java.awt.Color(201, 237, 220));
         exitBtn.setText("Zamknij aplikację");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -101,7 +143,9 @@ public class subsetGUI extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(263, 263, 263)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(targetSum, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
@@ -120,9 +164,14 @@ public class subsetGUI extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel7)
-                            .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING))
+                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, 211, Short.MAX_VALUE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)
+                                        .addGap(93, 93, 93)))
+                                .addGap(179, 179, 179)))
                         .addGap(17, 17, 17)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -146,11 +195,11 @@ public class subsetGUI extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(targetSum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
-                .addGap(23, 23, 23)
+                .addGap(66, 66, 66)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(maxNumberSetValue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(15, 15, 15)
+                .addGap(11, 11, 11)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(individualTolerance, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -174,7 +223,7 @@ public class subsetGUI extends javax.swing.JFrame {
                 .addComponent(startButton)
                 .addGap(18, 18, 18)
                 .addComponent(exitBtn)
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -278,5 +327,54 @@ public class subsetGUI extends javax.swing.JFrame {
      */
     public javax.swing.JButton getExitBtn() {
         return exitBtn;
+    }
+    
+    public Container getFrame(){
+        return this.getContentPane();
+    }
+    
+    public void drawButtons(){
+
+            ImageIcon icon = new ImageIcon("icon.png");
+            jLabel2.setIcon(icon);
+            
+            Component c = populationSize.getEditor().getComponent(0);
+            c.setBackground(Color.red);
+            
+             InputStream is;
+
+            Font font;
+            try {
+                is = new FileInputStream(new File("futura.ttf"));
+                font = Font.createFont(Font.TRUETYPE_FONT, is);
+                startButton.setFont(font);
+                startButton.setFont(startButton.getFont().deriveFont(1, (float)18.0));
+                 Component[] cs = populationSize.getComponents();
+            for(int i=0; i < cs.length; i++){
+                if(cs[i] instanceof BasicArrowButton){
+                    cs[i].setBackground(Color.red);
+                    cs[i].getGraphics().setColor(Color.red);
+                    cs[i].setForeground(Color.yellow);
+                    
+                }
+            }
+            } catch (FontFormatException ex) {
+                Logger.getLogger(subsetGUI.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(subsetGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            catch (IOException ex) {
+                Logger.getLogger(subsetGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+
+            getContentPane().setBackground(Color.red);
+            
+            JLabel lbl = new JLabel(icon);
+            lbl.setSize(200,200);
+            lbl.setLocation(-50,-70);
+                
+            getContentPane().add(lbl);
+            getContentPane().repaint();
     }
 }
