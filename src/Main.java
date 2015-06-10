@@ -13,9 +13,6 @@ public class Main {
 
     public static void main(String[] args){
         
-        
-        
-        
         subsetGUI gui = new subsetGUI();
         
         GUIAdapter guiAdapter = new GUIAdapter(gui);

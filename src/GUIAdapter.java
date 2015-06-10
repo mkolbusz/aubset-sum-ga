@@ -93,7 +93,6 @@ public class GUIAdapter {
             }
         });
         
-        
         this.gui.getExitBtn().addActionListener((ActionEvent e) -> {
             int choice = JOptionPane.showConfirmDialog(gui, 
                     "Zamykając aplikację stracisz wszystkie niezapisane wyniki algorytmów.\nCzy nadal chcesz zamknąć aplikację?",

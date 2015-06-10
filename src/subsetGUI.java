@@ -57,79 +57,123 @@ public class subsetGUI extends javax.swing.JFrame {
 
         populationSize = new javax.swing.JSpinner();
         targetSum = new javax.swing.JSpinner();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
         individualTolerance = new javax.swing.JSpinner();
         mutationPropability = new javax.swing.JSpinner();
         mutationNumberInStep = new javax.swing.JSpinner();
         startButton = new javax.swing.JButton();
         importDataCSVBtn = new javax.swing.JButton();
-        jLabel8 = new javax.swing.JLabel();
         propabilityOfSettingGene = new javax.swing.JSpinner();
-        jLabel9 = new javax.swing.JLabel();
         maxIterationsNumber = new javax.swing.JSpinner();
-        jLabel10 = new javax.swing.JLabel();
         maxNumberSetValue = new javax.swing.JSpinner();
         exitBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Problem sumy podzbiory - Alogrytm Genetyczny");
+        setTitle("Problem sumy podzbioru - Algorytm Genetyczny");
         setBackground(new java.awt.Color(126, 164, 17));
+        setBounds(new java.awt.Rectangle(600, 150, 0, 0));
         setForeground(java.awt.Color.white);
         setMaximumSize(new java.awt.Dimension(328, 508));
         setMinimumSize(new java.awt.Dimension(328, 508));
+        setResizable(false);
 
+        populationSize.setFont(new java.awt.Font("Cantarell", 1, 14)); // NOI18N
         populationSize.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(100), Integer.valueOf(1), null, Integer.valueOf(1)));
-        populationSize.setBorder(null);
+        populationSize.setMinimumSize(new java.awt.Dimension(37, 25));
+        populationSize.setPreferredSize(new java.awt.Dimension(37, 25));
+        populationSize.setRequestFocusEnabled(false);
 
-        targetSum.setFont(new java.awt.Font("Cantarell", 1, 15)); // NOI18N
+        targetSum.setFont(new java.awt.Font("Cantarell", 1, 14)); // NOI18N
         targetSum.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(1), Integer.valueOf(1), null, Integer.valueOf(1)));
-        targetSum.setBorder(null);
+        targetSum.setMinimumSize(new java.awt.Dimension(37, 25));
+        targetSum.setPreferredSize(new java.awt.Dimension(37, 25));
+        targetSum.setRequestFocusEnabled(false);
 
-        jLabel2.setText("ROZMIAR POPULACJI");
-
-        jLabel4.setText("Suma docelowa");
-
-        jLabel5.setText("<html>Tolerancja dla osobnika <b>[%]</b></html>");
-
-        jLabel6.setText("<html> Prawdopodobieństwo<br/> mutacji <b>[%]</b></html>");
-
-        jLabel7.setText("<html>\nMaksymalna ilość mutacji<br/>\nw kroku\n</html>");
-
+        individualTolerance.setFont(new java.awt.Font("Cantarell", 1, 14)); // NOI18N
         individualTolerance.setModel(new javax.swing.SpinnerNumberModel(50, 0, 100, 1));
+        individualTolerance.setMinimumSize(new java.awt.Dimension(37, 25));
+        individualTolerance.setPreferredSize(new java.awt.Dimension(37, 25));
+        individualTolerance.setRequestFocusEnabled(false);
 
+        mutationPropability.setFont(new java.awt.Font("Cantarell", 1, 14)); // NOI18N
         mutationPropability.setModel(new javax.swing.SpinnerNumberModel(50.0d, 0.0d, 100.0d, 0.01d));
+        mutationPropability.setMinimumSize(new java.awt.Dimension(37, 25));
+        mutationPropability.setPreferredSize(new java.awt.Dimension(37, 25));
+        mutationPropability.setRequestFocusEnabled(false);
 
+        mutationNumberInStep.setFont(new java.awt.Font("Cantarell", 1, 14)); // NOI18N
         mutationNumberInStep.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(5), Integer.valueOf(0), null, Integer.valueOf(1)));
+        mutationNumberInStep.setMinimumSize(new java.awt.Dimension(37, 25));
+        mutationNumberInStep.setPreferredSize(new java.awt.Dimension(37, 25));
+        mutationNumberInStep.setRequestFocusEnabled(false);
 
-        startButton.setBackground(new java.awt.Color(76, 59, 77));
-        startButton.setForeground(new java.awt.Color(201, 237, 220));
-        startButton.setText("Start - uruchom algorytm");
+        startButton.setBackground(new java.awt.Color(222, 237, 236));
+        startButton.setForeground(new java.awt.Color(50, 75, 85));
+        startButton.setText("START - URUCHOM ALGORYTM");
+        startButton.setToolTipText("");
+        startButton.setBorder(null);
+        startButton.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        startButton.setFocusPainted(false);
+        startButton.setMargin(new java.awt.Insets(2, 2, 2, 2));
+        startButton.setMaximumSize(new java.awt.Dimension(175, 27));
+        startButton.setMinimumSize(new java.awt.Dimension(175, 27));
+        startButton.setPreferredSize(new java.awt.Dimension(175, 27));
+        startButton.setRequestFocusEnabled(false);
+        startButton.setRolloverEnabled(false);
+        startButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                startButtonActionPerformed(evt);
+            }
+        });
 
-        importDataCSVBtn.setBackground(new java.awt.Color(76, 59, 77));
-        importDataCSVBtn.setForeground(new java.awt.Color(201, 237, 220));
-        importDataCSVBtn.setText("Importuj dane z pliku CSV");
+        importDataCSVBtn.setBackground(new java.awt.Color(222, 237, 236));
+        importDataCSVBtn.setForeground(new java.awt.Color(50, 75, 85));
+        importDataCSVBtn.setText("IMPORTUJ DANE Z PLIKU CSV");
+        importDataCSVBtn.setBorder(null);
         importDataCSVBtn.setBorderPainted(false);
         importDataCSVBtn.setFocusPainted(false);
+        importDataCSVBtn.setMargin(new java.awt.Insets(2, 2, 2, 2));
+        importDataCSVBtn.setRequestFocusEnabled(false);
+        importDataCSVBtn.setRolloverEnabled(false);
+        importDataCSVBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                importDataCSVBtnActionPerformed(evt);
+            }
+        });
 
-        jLabel8.setText("<html>Maksymalna ilość iteracji</html>");
-
+        propabilityOfSettingGene.setFont(new java.awt.Font("Cantarell", 1, 14)); // NOI18N
         propabilityOfSettingGene.setModel(new javax.swing.SpinnerNumberModel(30, 0, 100, 1));
+        propabilityOfSettingGene.setMinimumSize(new java.awt.Dimension(37, 25));
+        propabilityOfSettingGene.setPreferredSize(new java.awt.Dimension(37, 25));
+        propabilityOfSettingGene.setRequestFocusEnabled(false);
 
-        jLabel9.setText("<html>Prawdopodobieństwo ustawienia genu osobnika populacji początkowej <b>[%]</b></html>");
-
+        maxIterationsNumber.setFont(new java.awt.Font("Cantarell", 1, 14)); // NOI18N
         maxIterationsNumber.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(30), Integer.valueOf(1), null, Integer.valueOf(1)));
+        maxIterationsNumber.setMinimumSize(new java.awt.Dimension(37, 25));
+        maxIterationsNumber.setPreferredSize(new java.awt.Dimension(37, 25));
+        maxIterationsNumber.setRequestFocusEnabled(false);
 
-        jLabel10.setText("<html>\nMaksymalna wartość elementu<br/>w zbiorze wejściowym\n</html>");
-
+        maxNumberSetValue.setFont(new java.awt.Font("Cantarell", 1, 14)); // NOI18N
         maxNumberSetValue.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(1)));
+        maxNumberSetValue.setMinimumSize(new java.awt.Dimension(37, 25));
+        maxNumberSetValue.setPreferredSize(new java.awt.Dimension(37, 25));
+        maxNumberSetValue.setRequestFocusEnabled(false);
 
-        exitBtn.setBackground(new java.awt.Color(76, 59, 77));
-        exitBtn.setForeground(new java.awt.Color(201, 237, 220));
-        exitBtn.setText("Zamknij aplikację");
+        exitBtn.setBackground(new java.awt.Color(222, 237, 236));
+        exitBtn.setForeground(new java.awt.Color(137, 20, 50));
+        exitBtn.setText("ZAMKNIJ APLIKACJĘ");
+        exitBtn.setBorder(null);
+        exitBtn.setInheritsPopupMenu(true);
+        exitBtn.setMargin(new java.awt.Insets(2, 2, 2, 2));
+        exitBtn.setMaximumSize(new java.awt.Dimension(175, 27));
+        exitBtn.setMinimumSize(new java.awt.Dimension(175, 27));
+        exitBtn.setPreferredSize(new java.awt.Dimension(175, 27));
+        exitBtn.setRequestFocusEnabled(false);
+        exitBtn.setRolloverEnabled(false);
+        exitBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -138,110 +182,71 @@ public class subsetGUI extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(importDataCSVBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(importDataCSVBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 685, Short.MAX_VALUE)
                     .addComponent(startButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(263, 263, 263)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(targetSum, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-                            .addComponent(populationSize)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(jLabel8))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(17, 17, 17)
-                                .addComponent(maxIterationsNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(propabilityOfSettingGene, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, 211, Short.MAX_VALUE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)
-                                        .addGap(93, 93, 93)))
-                                .addGap(179, 179, 179)))
-                        .addGap(17, 17, 17)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(maxNumberSetValue, javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(individualTolerance, javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(mutationPropability, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE))
-                            .addComponent(mutationNumberInStep, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(exitBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(exitBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(targetSum, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
+                    .addComponent(maxNumberSetValue, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(individualTolerance, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(mutationPropability, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(mutationNumberInStep, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(propabilityOfSettingGene, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(maxIterationsNumber, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(populationSize, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(30, 30, 30))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(26, 26, 26)
-                .addComponent(importDataCSVBtn)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(populationSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(targetSum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addGap(66, 66, 66)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(maxNumberSetValue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(11, 11, 11)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(individualTolerance, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(importDataCSVBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(populationSize, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(13, 13, 13)
+                .addComponent(targetSum, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(71, 71, 71)
+                .addComponent(maxNumberSetValue, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(7, 7, 7)
+                .addComponent(individualTolerance, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(22, 22, 22)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(mutationPropability, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(mutationNumberInStep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(propabilityOfSettingGene, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(maxIterationsNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(33, 33, 33)
-                .addComponent(startButton)
-                .addGap(18, 18, 18)
-                .addComponent(exitBtn)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(mutationPropability, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addComponent(mutationNumberInStep, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(60, 60, 60)
+                .addComponent(propabilityOfSettingGene, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
+                .addComponent(maxIterationsNumber, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32)
+                .addComponent(startButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(2, 2, 2)
+                .addComponent(exitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(148, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void importDataCSVBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_importDataCSVBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_importDataCSVBtnActionPerformed
+
+    private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_startButtonActionPerformed
+
+    private void exitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_exitBtnActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton exitBtn;
     private javax.swing.JButton importDataCSVBtn;
     private javax.swing.JSpinner individualTolerance;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JSpinner maxIterationsNumber;
     private javax.swing.JSpinner maxNumberSetValue;
     private javax.swing.JSpinner mutationNumberInStep;
@@ -335,29 +340,22 @@ public class subsetGUI extends javax.swing.JFrame {
     
     public void drawButtons(){
 
-            ImageIcon icon = new ImageIcon("icon.png");
-            jLabel2.setIcon(icon);
+            ImageIcon icon = new ImageIcon("background.jpg");
             
             Component c = populationSize.getEditor().getComponent(0);
-            c.setBackground(Color.red);
             
-             InputStream is;
-
+            InputStream is;
             Font font;
+            
             try {
-                is = new FileInputStream(new File("futura.ttf"));
+                is = new FileInputStream(new File("futura_demi.ttf"));
                 font = Font.createFont(Font.TRUETYPE_FONT, is);
+                exitBtn.setFont(font);
+                exitBtn.setFont(exitBtn.getFont().deriveFont(1, (float)15.0));
+                importDataCSVBtn.setFont(font);
+                importDataCSVBtn.setFont(importDataCSVBtn.getFont().deriveFont(1, (float)15.0));
                 startButton.setFont(font);
-                startButton.setFont(startButton.getFont().deriveFont(1, (float)18.0));
-                 Component[] cs = populationSize.getComponents();
-            for(int i=0; i < cs.length; i++){
-                if(cs[i] instanceof BasicArrowButton){
-                    cs[i].setBackground(Color.red);
-                    cs[i].getGraphics().setColor(Color.red);
-                    cs[i].setForeground(Color.yellow);
-                    
-                }
-            }
+                startButton.setFont(startButton.getFont().deriveFont(1, (float)15.0));
             } catch (FontFormatException ex) {
                 Logger.getLogger(subsetGUI.class.getName()).log(Level.SEVERE, null, ex);
             } catch (FileNotFoundException ex) {
@@ -367,12 +365,52 @@ public class subsetGUI extends javax.swing.JFrame {
                 Logger.getLogger(subsetGUI.class.getName()).log(Level.SEVERE, null, ex);
             }
             
-
-            getContentPane().setBackground(Color.red);
             
-            JLabel lbl = new JLabel(icon);
-            lbl.setSize(200,200);
-            lbl.setLocation(-50,-70);
+            getContentPane().setBackground(Color.black);
+            
+            
+            
+            
+            importDataCSVBtn.addMouseListener(new java.awt.event.MouseAdapter(){
+                public void mouseEntered(java.awt.event.MouseEvent evt){
+                importDataCSVBtn.setBackground(new Color(19, 38, 49));
+                importDataCSVBtn.setForeground(new Color(222, 237, 236));
+            }
+                public void mouseExited(java.awt.event.MouseEvent evt){
+                importDataCSVBtn.setBackground(new Color(222, 237, 236));
+                importDataCSVBtn.setForeground(new Color(50, 75, 85));
+                }
+            });
+
+
+            startButton.addMouseListener(new java.awt.event.MouseAdapter(){
+                public void mouseEntered(java.awt.event.MouseEvent evt){
+                startButton.setBackground(new Color(19, 38, 49));
+                startButton.setForeground(new Color(222, 237, 236));
+            }
+                public void mouseExited(java.awt.event.MouseEvent evt){
+                startButton.setBackground(new Color(222, 237, 236));
+                startButton.setForeground(new Color(50, 75, 85));
+                }
+            });
+            
+            
+            exitBtn.addMouseListener(new java.awt.event.MouseAdapter(){
+                public void mouseEntered(java.awt.event.MouseEvent evt){
+                exitBtn.setBackground(new Color(137, 20, 50));
+                exitBtn.setForeground(new Color(222, 237, 236));
+            }
+                public void mouseExited(java.awt.event.MouseEvent evt){
+                exitBtn.setBackground(new Color(222, 237, 236));
+                exitBtn.setForeground(new Color(137, 20, 50));
+                }
+            });
+            
+            
+            
+            JLabel lbl = new JLabel(icon);       
+            lbl.setSize(709,719);
+            lbl.setLocation(0,0);
                 
             getContentPane().add(lbl);
             getContentPane().repaint();
